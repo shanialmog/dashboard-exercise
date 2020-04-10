@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 30px;
+    width: 100%
 }
 
 .event-label {
@@ -17,4 +17,23 @@
     background-color: #a18bf0;
     padding: 2px 10px;
     border-radius: 2px;
+}
+
+.event-title-cont {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.button-cont {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.events-title-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import Button from '@material-ui/core/Button'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import IconButton from '@material-ui/core/IconButton'
 
 import { Link } from 'react-router-dom'
 import Event from '../Event'
@@ -30,11 +32,36 @@ const EventsList = () => {
         eventsFetch();
     }, [])
 
+    const addEvent = async () => {
+        const newEvent =
+        {
+            title: "Event title",
+            summary: "Event summary"
+        }
+        const requestAdd = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newEvent)
+        }
+        console.log("requestedit", requestAdd)
+        await fetch(`/events/`, requestAdd)
+        // setEventsList([newEvent,...events])
+    }
 
     console.log("events", events)
     return (
         <div>
-            <h1>Events</h1>
+            <div className="events-title-cont">
+                <div>
+                    <h1>Events</h1>
+                </div>
+                <div>
+                    <IconButton onClick={addEvent} edge="end" color="primary">
+                        {/* <IconButton edge="end" color="primary"> */}
+                        <AddCircleIcon fontSize="large" />
+                    </IconButton>
+                </div>
+            </div>
             <div>
                 {events.map(item => {
                     return (

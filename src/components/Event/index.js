@@ -5,6 +5,9 @@ import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+
+import { Link } from 'react-router-dom'
 
 
 
@@ -19,15 +22,15 @@ const Event = ({ match, location }) => {
                 // setEventTitle(event)
                 const response = await fetch(`/events/${eventId}`)
                 const textResponse = await (response.json())
-                console.log("textResponse", textResponse)
+                // console.log("textResponse", textResponse)
                 setEvent(textResponse)
             } catch (e) {
-                console.log(e)
+                // console.log(e)
                 setEvent(event)
             }
         }
         eventFetch();
-    }, [])
+    }, [edit])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -36,8 +39,32 @@ const Event = ({ match, location }) => {
     const handleChange = (event) => {
         const { name, value } = event.target
         setEvent(prevState => ({ ...prevState, [name]: value }))
-        console.log(name)
-        console.log(value)
+        // console.log(name)
+        // console.log(value)
+    }
+
+    const updateEvent = async () => {
+        const requestEdit = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(event)
+        }
+        console.log("requestedit", requestEdit)
+        await fetch(`/events/${eventId}`, requestEdit)
+        setEdit(false)
+    }
+
+    const deleteEvent = async () => {
+        const requestEdit = {
+            method: "DELETE",
+        }
+        console.log("requestedit", requestEdit)
+        await fetch(`/events/${eventId}`, requestEdit)
+        setEdit(false)
+    }
+
+    const cancelEditEvent = () => {
+        setEdit(false)
     }
 
     // const handleClickEdit = () => {
@@ -71,24 +98,42 @@ const Event = ({ match, location }) => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="button" style={{ marginTop: '20px' }}>
-                            {/* <Button onClick={() => updateEvent} variant="contained">Update</Button> */}
-                            <Button variant="contained">Update event</Button>
+                        <div className="button-cont">
+                            <div>
+                                <Link to={`/events/`}>
+                                    <Button onClick={deleteEvent} color="secondary" variant="contained">Delete</Button>
+                                </Link>
+                            </div>
+                            <div>
+                                <Button onClick={cancelEditEvent} color="primary" variant="contained">Cancel</Button>
+                            </div>
+                            <div>
+                                <Button onClick={updateEvent} color="primary" variant="contained">Update</Button>
+                            </div>
                         </div>
                     </form>
                 </div>
                 :
                 <div className="event-cont">
-                    <div className="event-title">
-                        {event.topics ?
-                            <span className="event-label">{event.topics}</span>
-                            :
-                            <span className="event-label">General</span>
-                        }
-                        <h1>{event.title}</h1>
-                        <IconButton onClick={() => setEdit(true)} edge="end" color="inherit">
-                            <EditIcon />
-                        </IconButton>
+                    <div className="event-title-cont">
+                        <div>
+                            <Link to={`/events/`}>
+                                <IconButton edge="end" color="inherit">
+                                    <ArrowBackIosIcon />
+                                </IconButton>
+                            </Link>
+                        </div>
+                        <div className="event-title">
+                            {event.topics ?
+                                <span className="event-label">{event.topics}</span>
+                                :
+                                <span className="event-label">General</span>
+                            }
+                            <h1>{event.title}</h1>
+                            <IconButton onClick={() => setEdit(true)} edge="end" color="inherit">
+                                <EditIcon />
+                            </IconButton>
+                        </div>
                     </div>
                     <Typography variant="h6" gutterBottom>
                         {event.summary}
