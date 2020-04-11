@@ -32,21 +32,30 @@ const EventsList = () => {
         eventsFetch();
     }, [])
 
-    const addEvent = async () => {
-        const newEvent =
-        {
-            title: "Event title",
-            summary: "Event summary"
-        }
-        const requestAdd = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newEvent)
-        }
-        console.log("requestedit", requestAdd)
-        await fetch(`/events/`, requestAdd)
-        // setEventsList([newEvent,...events])
-    }
+    // const addEvent = async () => {
+    //     const newEvent =
+    //     {
+    //         title: "Event title",
+    //         summary: "Event summary"
+    //     }
+    //     const requestAdd = {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(newEvent)
+    //     }
+    //     console.log("requestedit", requestAdd)
+    //     await fetch(`/events`, requestAdd).then(response =>
+    //         response.text()
+    //     ).then(
+    //         data => setEventsList({
+    //             title: "Event title",
+    //             summary: "Event summary",
+    //             id: data.id
+    //         })
+    //     )
+    //     console.log(events)
+    // }
+
 
     console.log("events", events)
     return (
@@ -56,10 +65,11 @@ const EventsList = () => {
                     <h1>Events</h1>
                 </div>
                 <div>
-                    <IconButton onClick={addEvent} edge="end" color="primary">
-                        {/* <IconButton edge="end" color="primary"> */}
-                        <AddCircleIcon fontSize="large" />
-                    </IconButton>
+                    <Link to={`/newevent`}>
+                        <IconButton edge="end" color="primary">
+                            <AddCircleIcon fontSize="large" />
+                        </IconButton>
+                    </Link>
                 </div>
             </div>
             <div>
