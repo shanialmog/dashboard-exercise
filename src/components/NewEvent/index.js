@@ -38,9 +38,14 @@ const NewEvent = () => {
                     if (response.ok) {
                         setFetchData(false)
                         return history.push('/events')
+                    } else {
+                        setFetchData(false)
                     }
                 }
-            ).catch(error => console.log("error", error))
+            ).catch(error => {
+                console.log("error", error)
+                setFetchData(false)
+            })
     }
 
     return (
