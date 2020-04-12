@@ -28,7 +28,6 @@ const EventsList = () => {
                 console.log(response.statusText)
                 return setFetchError(response.statusText)
             }
-            // console.log("response", response)
             let textResponse = await (response.json())
             setEventsList(textResponse)
             setFetchData(false)

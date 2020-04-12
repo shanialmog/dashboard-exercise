@@ -10,29 +10,38 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Alert from '@material-ui/lab/Alert'
 
 import { Link } from 'react-router-dom'
+import { useHistory } from "react-router-dom"
 
 
 
 const Event = ({ match, location }) => {
     const { params: { eventId } } = match
+    let history = useHistory()
+
     const [event, setEvent] = useState({})
     const [edit, setEdit] = useState(false)
     const [fetchData, setFetchData] = useState(false)
-    const [fetchError, setFetchError] = useState()
+    const [fetchError, setFetchError] = useState('')
 
 
     useEffect(() => {
         const eventFetch = async () => {
-            try {
-                setFetchData(true)
-                const response = await fetch(`/events/${eventId}`)
-                const textResponse = await (response.json())
-                setEvent(textResponse)
+            setFetchData(true)
+            // setFetchError('')
+            let response = await fetch(`/events/${eventId}`)
+                .catch(error => {
+                    console.log("error", error)
+                    setFetchData(false)
+                    setFetchError(error)
+                })
+            if (!response.ok) {
                 setFetchData(false)
-            } catch (e) {
-                // setEvent(event)
-                setFetchData(false)
+                console.log(response.statusText)
+                return setFetchError(response.statusText)
             }
+            let textResponse = await (response.json())
+            setFetchData(false)
+            setEvent(textResponse)
         }
         eventFetch();
     }, [edit])
@@ -62,7 +71,8 @@ const Event = ({ match, location }) => {
                         setEdit(false)
                     } else {
                         setFetchData(false)
-                        console.log(response.statusText)
+                        console.log("response", response.statusText)
+                        console.log(fetchError)
                         return setFetchError(response.statusText)
                     }
                 }
@@ -80,8 +90,24 @@ const Event = ({ match, location }) => {
         }
         console.log("requestedit", requestEdit)
         await fetch(`/events/${eventId}`, requestEdit)
-        setEdit(false)
-        setFetchData(false)
+            .then(
+                response => {
+                    if (response.ok) {
+                        setFetchData(false)
+                        setEdit(false)
+                        return history.push('/events')
+                    } else {
+                        setFetchData(false)
+                        console.log("response", response.statusText)
+                        console.log(fetchError)
+                        return setFetchError(response.statusText)
+                    }
+                }
+            ).catch(error => {
+                setFetchData(false)
+                setEdit(false)
+                setFetchError(error)
+            })
     }
 
     const cancelEditEvent = () => {
@@ -101,6 +127,11 @@ const Event = ({ match, location }) => {
                     {edit ?
                         <div className="event-cont">
                             <h1>Edit event</h1>
+                            {fetchError &&
+                                <Alert variant="filled" severity="error">
+                                    {fetchError}
+                                </Alert>
+                            }
                             <form onSubmit={handleSubmit} noValidate autoComplete="off">
                                 <div style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column' }}>
                                     <TextField
@@ -123,9 +154,7 @@ const Event = ({ match, location }) => {
                                 </div>
                                 <div className="button-cont">
                                     <div>
-                                        <Link to={`/events/`}>
-                                            <Button onClick={deleteEvent} color="secondary" variant="contained">Delete</Button>
-                                        </Link>
+                                        <Button onClick={deleteEvent} color="secondary" variant="contained">Delete</Button>
                                     </div>
                                     <div>
                                         <Button onClick={cancelEditEvent} color="primary" variant="contained">Cancel</Button>
