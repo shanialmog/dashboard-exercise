@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Alert from '@material-ui/lab/Alert'
 
 import { Link } from 'react-router-dom'
 
@@ -17,6 +18,7 @@ const Event = ({ match, location }) => {
     const [event, setEvent] = useState({})
     const [edit, setEdit] = useState(false)
     const [fetchData, setFetchData] = useState(false)
+    const [fetchError, setFetchError] = useState()
 
 
     useEffect(() => {
@@ -25,12 +27,10 @@ const Event = ({ match, location }) => {
                 setFetchData(true)
                 const response = await fetch(`/events/${eventId}`)
                 const textResponse = await (response.json())
-                // console.log("textResponse", textResponse)
                 setEvent(textResponse)
                 setFetchData(false)
             } catch (e) {
-                // console.log(e)
-                setEvent(event)
+                // setEvent(event)
                 setFetchData(false)
             }
         }
@@ -44,8 +44,6 @@ const Event = ({ match, location }) => {
     const handleChange = (event) => {
         const { name, value } = event.target
         setEvent(prevState => ({ ...prevState, [name]: value }))
-        // console.log(name)
-        // console.log(value)
     }
 
     const updateEvent = async () => {
@@ -57,8 +55,22 @@ const Event = ({ match, location }) => {
         }
         console.log("requestedit", requestEdit)
         await fetch(`/events/${eventId}`, requestEdit)
-        setEdit(false)
-        setFetchData(false)
+            .then(
+                response => {
+                    if (response.ok) {
+                        setFetchData(false)
+                        setEdit(false)
+                    } else {
+                        setFetchData(false)
+                        console.log(response.statusText)
+                        return setFetchError(response.statusText)
+                    }
+                }
+            ).catch(error => {
+                setFetchData(false)
+                setEdit(false)
+                setFetchError(error)
+            })
     }
 
     const deleteEvent = async () => {
@@ -126,6 +138,11 @@ const Event = ({ match, location }) => {
                         </div>
                         :
                         <div className="event-cont">
+                            {fetchError &&
+                                <Alert variant="filled" severity="error">
+                                    {fetchError}
+                                </Alert>
+                            }
                             <div className="event-title-cont">
                                 <div>
                                     <Link to={`/events/`}>

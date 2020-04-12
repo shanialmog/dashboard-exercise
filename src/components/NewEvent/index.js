@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom"
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Alert from '@material-ui/lab/Alert'
 
 
 const NewEvent = () => {
@@ -14,6 +15,7 @@ const NewEvent = () => {
     let history = useHistory()
     const [event, setEvent] = useState({ title: "Enter title", summary: "Enter summary" })
     const [fetchData, setFetchData] = useState(false)
+    const [fetchError, setFetchError] = useState()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -34,17 +36,18 @@ const NewEvent = () => {
         await fetch(`/events`, requestAdd)
             .then(
                 response => {
-                    // console.log(response)
                     if (response.ok) {
                         setFetchData(false)
                         return history.push('/events')
                     } else {
                         setFetchData(false)
+                        console.log(response)
+                        return setFetchError(response.statusText)
                     }
                 }
             ).catch(error => {
-                console.log("error", error)
                 setFetchData(false)
+                setFetchError(error)
             })
     }
 
@@ -54,6 +57,11 @@ const NewEvent = () => {
                 <CircularProgress color="secondary" />
                 :
                 <div className="event-cont">
+                    {fetchError &&
+                        <Alert variant="filled" severity="error">
+                            {fetchError}
+                        </Alert>
+                    }
                     <h1>New event</h1>
                     <form onSubmit={handleSubmit} noValidate autoComplete="off">
                         <div style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column' }}>
