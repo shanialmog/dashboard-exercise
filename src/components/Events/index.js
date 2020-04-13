@@ -11,9 +11,10 @@ import { Link } from 'react-router-dom'
 const EventsList = () => {
     const [events, setEventsList] = useState([])
     const [fetchData, setFetchData] = useState(false)
-    const [fetchError, setFetchError] = useState()
+    const [fetchError, setFetchError] = useState(null)
 
     useEffect(() => {
+        setFetchError('')
         const eventsFetch = async () => {
             setEventsList(events)
             setFetchData(true)

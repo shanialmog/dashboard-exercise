@@ -15,7 +15,7 @@ const NewEvent = () => {
     let history = useHistory()
     const [event, setEvent] = useState({ title: "Enter title", summary: "Enter summary" })
     const [fetchData, setFetchData] = useState(false)
-    const [fetchError, setFetchError] = useState()
+    const [fetchError, setFetchError] = useState(null)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -27,6 +27,7 @@ const NewEvent = () => {
     }
 
     const saveEvent = async () => {
+        setFetchError('')
         setFetchData(true)
         const requestAdd = {
             method: "POST",

@@ -19,12 +19,14 @@ const Event = ({ match, location }) => {
     let history = useHistory()
 
     const [event, setEvent] = useState({})
+    const [tempEvent, setTempEvent] = useState({})
     const [edit, setEdit] = useState(false)
     const [fetchData, setFetchData] = useState(false)
-    const [fetchError, setFetchError] = useState('')
+    const [fetchError, setFetchError] = useState(null)
 
 
     useEffect(() => {
+        setFetchError('')
         const eventFetch = async () => {
             setFetchData(true)
             // setFetchError('')
@@ -42,9 +44,10 @@ const Event = ({ match, location }) => {
             let textResponse = await (response.json())
             setFetchData(false)
             setEvent(textResponse)
+            setTempEvent(textResponse)
         }
         eventFetch();
-    }, [edit])
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -52,10 +55,14 @@ const Event = ({ match, location }) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target
-        setEvent(prevState => ({ ...prevState, [name]: value }))
+        setTempEvent(prevState => ({ ...prevState, [name]: value }))
     }
 
     const updateEvent = async () => {
+        console.log("the event", event)
+        console.log("the temp", tempEvent)
+        setEvent(tempEvent)
+        setFetchError('')
         setFetchData(true)
         const requestEdit = {
             method: "PUT",
@@ -84,6 +91,7 @@ const Event = ({ match, location }) => {
     }
 
     const deleteEvent = async () => {
+        setFetchError('')
         setFetchData(true)
         const requestEdit = {
             method: "DELETE",
@@ -140,14 +148,14 @@ const Event = ({ match, location }) => {
                                         id="standard-required"
                                         label="Title"
                                         name="title"
-                                        value={event.title}
+                                        value={tempEvent.title}
                                         onChange={handleChange}
                                     />
                                     <TextField required
                                         id="standard-password-input"
                                         label="Summary"
                                         name="summary"
-                                        value={event.summary}
+                                        value={tempEvent.summary}
                                         multiline
                                         onChange={handleChange}
                                     />
@@ -187,7 +195,7 @@ const Event = ({ match, location }) => {
                                         <span className="event-label">General</span>
                                     }
                                     <h1>{event.title}</h1>
-                                    <IconButton onClick={() => setEdit(true)} edge="end" color="inherit">
+                                    <IconButton onClick={() => { setEdit(true) ; setTempEvent(event)}} edge="end" color="inherit">
                                         <EditIcon />
                                     </IconButton>
                                 </div>
