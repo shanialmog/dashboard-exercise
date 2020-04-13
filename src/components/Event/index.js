@@ -195,14 +195,16 @@ const Event = ({ match, location }) => {
                                         <span className="event-label">General</span>
                                     }
                                     <h1>{event.title}</h1>
-                                    <IconButton onClick={() => { setEdit(true) ; setTempEvent(event)}} edge="end" color="inherit">
+                                    <IconButton onClick={() => { setEdit(true); setTempEvent(event) }} edge="end" color="inherit">
                                         <EditIcon />
                                     </IconButton>
                                 </div>
                             </div>
-                            <Typography variant="h6" gutterBottom>
-                                {event.summary}
-                            </Typography>
+                            <div className="typo-summary">
+                                <Typography variant="h6" style={{ width: "80%" }}>
+                                    {event.summary}
+                                </Typography>
+                            </div>
                             {/*display the match and location props from Router-dom}
                     {/* <p>
                         <strong>Match Props: </strong>
