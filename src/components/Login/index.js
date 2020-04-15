@@ -91,7 +91,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="button">
-                            <Button onClick={LogIn} variant="contained">login</Button>
+                            <Button type="submit" onClick={LogIn} variant="contained">login</Button>
                         </div>
                     </form>
                 </div>
