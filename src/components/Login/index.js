@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useHistory } from "react-router-dom"
 
@@ -14,7 +14,34 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
-    const [loggedIn, setLoggedIn] = useState('')
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [userLoggedIn] = useState('')
+
+
+    useEffect(() => {
+        setFetchError('')
+        const isLoggedIn = async () => {
+            setFetchData(true)
+            let response = await fetch('/users/status')
+                .catch(error => {
+                    console.log("error", error)
+                    setFetchData(false)
+                    setFetchError(error)
+                })
+            if (!response.ok) {
+                setFetchData(false)
+                console.log(response.statusText)
+                return setFetchError(response.statusText)
+            }
+            console.log(response)
+            let textResponse = await (response.json())
+            console.log("is logged in ", textResponse)
+            setLoggedIn(true)
+            setUserName(textResponse.user.username)
+            setFetchData(false)
+        }
+        isLoggedIn();
+    }, [])
 
     const handleSubmit = (event) => {
         event.preventDefault()

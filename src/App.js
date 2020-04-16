@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+import NavBar from './components/NavBar'
 import Login from './components/Login'
 import EventsList from './components/Events'
 import Event from './components/Event'
@@ -12,8 +13,9 @@ function App() {
   return (
     <div>
       <CssBaseline />
-      <div className="container">
-        <Router>
+      <Router>
+        <NavBar />
+        <div className="container">
           <Switch>
             <Route path='/' exact component={Login} />
             <Route path='/dashboard' exact component={Dashboard} />
@@ -21,8 +23,8 @@ function App() {
             <Route path='/events/:eventId' exact component={Event} />
             <Route path='/newevent' exact component={NewEvent} />
           </Switch>
-        </Router>
-      </div>
+        </div>
+      </Router>
     </div>
   )
 }
