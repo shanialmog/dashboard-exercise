@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
+
+import { UserContext } from '../../store/UserContext'
 
 import AppBar from '@material-ui/core/AppBar'
 import Typography from '@material-ui/core/Typography'
@@ -8,13 +9,16 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 
 
+
 const NavBar = () => {
-    const [loggedIn, setLoggedIn] = useState(false)
+    const user = useContext(UserContext)
+    const [isLoggedIn, setIsLoggedIn] = user.isLoggedIn
     const [userName, setUserName] = useState(null)
 
+    
     useEffect(() => {
-        // setFetchError('')
-        const isLoggedIn = async () => {
+        console.log("context-user", isLoggedIn)
+        const checkLogin = async () => {
             // setFetchData(true)
             let response = await fetch('/users/status')
             //     .catch(error => {
@@ -31,13 +35,13 @@ const NavBar = () => {
             let textResponse = await (response.json())
             console.log("is logged in ", textResponse)
             if (textResponse.loggedIn) {
-                setLoggedIn(true)
+                setIsLoggedIn(true)
                 setUserName(textResponse.user.username)
             }
             // setFetchData(false)
         }
-        isLoggedIn();
-    }, [loggedIn])
+        checkLogin();
+    }, [ isLoggedIn])
 
     const logOut = async () => {
         let response = await fetch('/users/logout', { method: "POST" })
@@ -45,7 +49,7 @@ const NavBar = () => {
                 response => {
                     console.log(response)
                     if (response.ok) {
-                        setLoggedIn(false)
+                        setIsLoggedIn(false)
                     }
                 }
             )
@@ -62,7 +66,7 @@ const NavBar = () => {
                     </div>
                     {/* </Typography> */}
                     {
-                        loggedIn ?
+                        isLoggedIn ?
                             <div className="navbar-login">
                                 <div>{userName}</div>
                                 <Typography>
