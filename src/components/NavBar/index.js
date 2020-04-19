@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button'
 const NavBar = () => {
     const user = useContext(UserContext)
     const [isLoggedIn, setIsLoggedIn] = user.isLoggedIn
-    const [userName, setUserName] = useState(null)
+    const [userName, setUserName] = user.userName
 
     
     useEffect(() => {
@@ -36,7 +36,7 @@ const NavBar = () => {
             console.log("is logged in ", textResponse)
             if (textResponse.loggedIn) {
                 setIsLoggedIn(true)
-                setUserName(textResponse.user.username)
+                setUserName(textResponse.user.userName)
             }
             // setFetchData(false)
         }
