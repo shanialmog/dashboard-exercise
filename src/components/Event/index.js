@@ -42,7 +42,6 @@ const Event = ({ match, location }) => {
                 })
             if (!response.ok) {
                 setFetchData(false)
-                console.log(response.statusText)
                 return setFetchError(response.statusText)
             }
             let textResponse = await (response.json())
@@ -63,8 +62,6 @@ const Event = ({ match, location }) => {
     }
 
     const updateEvent = async () => {
-        console.log("the event", event)
-        console.log("the temp", tempEvent)
         setEvent(tempEvent)
         setFetchError('')
         setFetchData(true)
@@ -82,8 +79,6 @@ const Event = ({ match, location }) => {
                         setEdit(false)
                     } else {
                         setFetchData(false)
-                        console.log("response", response.statusText)
-                        console.log(fetchError)
                         return setFetchError(response.statusText)
                     }
                 }
@@ -100,7 +95,6 @@ const Event = ({ match, location }) => {
         const requestEdit = {
             method: "DELETE",
         }
-        console.log("requestedit", requestEdit)
         await fetch(`/events/${eventId}`, requestEdit)
             .then(
                 response => {
@@ -110,8 +104,6 @@ const Event = ({ match, location }) => {
                         return history.push('/events')
                     } else {
                         setFetchData(false)
-                        console.log("response", response.statusText)
-                        console.log(fetchError)
                         return setFetchError(response.statusText)
                     }
                 }
@@ -126,9 +118,6 @@ const Event = ({ match, location }) => {
         setEdit(false)
     }
 
-
-    console.log("event", event)
-    console.log(edit)
 
     return (
         <div>

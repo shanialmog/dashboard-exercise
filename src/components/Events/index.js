@@ -25,7 +25,6 @@ const EventsList = () => {
             setFetchData(true)
             let response = await fetch('/events')
                 .catch(error => {
-                    console.log("error", error)
                     setFetchData(false)
                     setFetchError(error)
                 })

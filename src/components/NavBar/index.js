@@ -47,7 +47,6 @@ const NavBar = () => {
         let response = await fetch('/users/logout', { method: "POST" })
             .then(
                 response => {
-                    console.log(response)
                     if (response.ok) {
                         setIsLoggedIn(false)
                     }

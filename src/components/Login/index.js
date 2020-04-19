@@ -42,16 +42,13 @@ const Login = () => {
         await fetch(`/users/login`, requestLogin)
             .then(
                 response => {
-                    console.log(response, response.ok, response.ok===true)
                     if (response.ok) {
                         setFetchData(false)
                         setIsLoggedIn(true)
-                        console.log("pp")
                         setUserName(tempUserName)
                         return history.push('/events')
                     } else {
                         setFetchData(false)
-                        console.log(response)
                         return setFetchError(response.statusText)
                         // setFetchError(response.statusText)
                         // return console.log(fetchError)
