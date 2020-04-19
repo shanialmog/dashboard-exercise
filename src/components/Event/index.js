@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { useHistory } from "react-router-dom"
+
+import { UserContext } from '../../store/UserContext'
+
 import Typography from '@material-ui/core/Typography'
 import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
@@ -9,8 +13,6 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Alert from '@material-ui/lab/Alert'
 
-import { Link } from 'react-router-dom'
-import { useHistory } from "react-router-dom"
 
 
 
@@ -18,6 +20,8 @@ const Event = ({ match, location }) => {
     const { params: { eventId } } = match
     let history = useHistory()
 
+    const user = useContext(UserContext)
+    const [isLoggedIn] = user.isLoggedIn
     const [event, setEvent] = useState({})
     const [tempEvent, setTempEvent] = useState({})
     const [edit, setEdit] = useState(false)
@@ -195,9 +199,12 @@ const Event = ({ match, location }) => {
                                         <span className="event-label">General</span>
                                     }
                                     <h1>{event.title}</h1>
-                                    <IconButton onClick={() => { setEdit(true); setTempEvent(event) }} edge="end" color="inherit">
-                                        <EditIcon />
-                                    </IconButton>
+                                    {
+                                        isLoggedIn &&
+                                        <IconButton onClick={() => { setEdit(true); setTempEvent(event) }} edge="end" color="inherit">
+                                            <EditIcon />
+                                        </IconButton>
+                                    }
                                 </div>
                             </div>
                             <div className="typo-summary">
