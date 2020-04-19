@@ -33,7 +33,6 @@ const Event = ({ match, location }) => {
         setFetchError('')
         const eventFetch = async () => {
             setFetchData(true)
-            // setFetchError('')
             let response = await fetch(`/events/${eventId}`)
                 .catch(error => {
                     console.log("error", error)

@@ -19,26 +19,13 @@ const NavBar = () => {
     useEffect(() => {
         console.log("context-user", isLoggedIn)
         const checkLogin = async () => {
-            // setFetchData(true)
             let response = await fetch('/users/status')
-            //     .catch(error => {
-            //         console.log("error", error)
-            //         setFetchData(false)
-            //         setFetchError(error)
-            //     })
-            // if (!response.ok) {
-            //     // setFetchData(false)
-            //     console.log(response.statusText)
-            //     return setFetchError(response.statusText)
-            // }
-            // console.log(response)
             let textResponse = await (response.json())
             console.log("is logged in ", textResponse)
             if (textResponse.loggedIn) {
                 setIsLoggedIn(true)
                 setUserName(textResponse.user.userName)
             }
-            // setFetchData(false)
         }
         checkLogin();
     }, [ isLoggedIn])
@@ -58,12 +45,10 @@ const NavBar = () => {
         <div>
             <AppBar position="relative">
                 <Toolbar>
-                    {/* <Typography variant="h6" noWrap> */}
                     <div style={{ flexGrow: "1" }}>
                         <Link to="/events"><Button style={{ color: "#ffff" }}>Events</Button ></Link>
                         <Link to="/dashboard"><Button style={{ color: "#ffff" }}>Dashboard</Button ></Link>
                     </div>
-                    {/* </Typography> */}
                     {
                         isLoggedIn ?
                             <div className="navbar-login">
