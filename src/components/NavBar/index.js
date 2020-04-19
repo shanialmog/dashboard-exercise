@@ -17,11 +17,9 @@ const NavBar = () => {
 
     
     useEffect(() => {
-        console.log("context-user", isLoggedIn)
         const checkLogin = async () => {
-            let response = await fetch('/users/status')
-            let textResponse = await (response.json())
-            console.log("is logged in ", textResponse)
+            const response = await fetch('/users/status')
+            const textResponse = await (response.json())
             if (textResponse.loggedIn) {
                 setIsLoggedIn(true)
                 setUserName(textResponse.user.userName)
