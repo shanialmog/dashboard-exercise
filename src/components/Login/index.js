@@ -18,31 +18,6 @@ const Login = () => {
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
 
-    // useEffect(() => {
-    //     setFetchError('')
-    //     const isLoggedIn = async () => {
-    //         setFetchData(true)
-    //         let response = await fetch('/users/status')
-    //             .catch(error => {
-    //                 console.log("error", error)
-    //                 setFetchData(false)
-    //                 setFetchError(error)
-    //             })
-    //         if (!response.ok) {
-    //             setFetchData(false)
-    //             console.log(response.statusText)
-    //             return setFetchError(response.statusText)
-    //         }
-    //         // console.log(response)
-    //         let textResponse = await (response.json())
-    //         // console.log("is logged in ", textResponse)
-    //         setLoggedIn(true)
-    //         setUserName(textResponse.user.username)
-    //         setFetchData(false)
-    //     }
-    //     isLoggedIn();
-    // }, [])
-
     const handleSubmit = (event) => {
         event.preventDefault()
     }
@@ -52,8 +27,6 @@ const Login = () => {
         if (name === 'userName') {
             setTempUserName(value)
         } else { setPassword(value) }
-        console.log("tempUserName",tempUserName)
-        console.log("userName",userName)
     }
 
     const LogIn = async () => {

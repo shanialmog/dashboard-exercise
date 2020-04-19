@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import Provider from './store/UserContext'
+import UserContextProvider from './store/UserContext'
 
 import NavBar from './components/NavBar'
 import Login from './components/Login'
@@ -15,7 +15,7 @@ import NewEvent from './components/NewEvent'
 
 function App() {
   return (
-    <Provider value={10}>
+    <UserContextProvider>
       <CssBaseline />
       <Router>
         <NavBar />
@@ -29,7 +29,7 @@ function App() {
           </Switch>
         </div>
       </Router>
-    </Provider>
+    </UserContextProvider>
   )
 }
 
