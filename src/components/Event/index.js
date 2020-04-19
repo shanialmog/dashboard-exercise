@@ -200,15 +200,6 @@ const Event = ({ match, location }) => {
                                     {event.summary}
                                 </Typography>
                             </div>
-                            {/*display the match and location props from Router-dom}
-                    {/* <p>
-                        <strong>Match Props: </strong>
-                        <code>{JSON.stringify(match, null, 2)}</code>
-                    </p>
-                    <p>
-                        <strong>Location Props: </strong>
-                        <code>{JSON.stringify(location)}</code>
-                    </p> */}
                         </div>
                     }
                 </div>
