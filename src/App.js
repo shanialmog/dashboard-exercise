@@ -2,18 +2,24 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+import UserContextProvider from './store/UserContext'
+
+import NavBar from './components/NavBar'
 import Login from './components/Login'
 import EventsList from './components/Events'
 import Event from './components/Event'
 import Dashboard from './components/Dashboard'
 import NewEvent from './components/NewEvent'
 
+
+
 function App() {
   return (
-    <div>
+    <UserContextProvider>
       <CssBaseline />
-      <div className="container">
-        <Router>
+      <Router>
+        <NavBar />
+        <div className="container">
           <Switch>
             <Route path='/' exact component={Login} />
             <Route path='/dashboard' exact component={Dashboard} />
@@ -21,9 +27,9 @@ function App() {
             <Route path='/events/:eventId' exact component={Event} />
             <Route path='/newevent' exact component={NewEvent} />
           </Switch>
-        </Router>
-      </div>
-    </div>
+        </div>
+      </Router>
+    </UserContextProvider>
   )
 }
 

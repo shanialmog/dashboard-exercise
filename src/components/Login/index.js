@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-
+import React, { useState, useContext } from 'react'
 import { useHistory } from "react-router-dom"
+
+import { UserContext } from '../../store/UserContext'
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -9,12 +10,13 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const Login = () => {
 
     let history = useHistory()
-
-    const [username, setUserName] = useState('')
+    const user = useContext(UserContext)
+    const [_isLoggedIn, setIsLoggedIn] = user.isLoggedIn
+    const [userName, setUserName] = user.userName
+    const [tempUserName, setTempUserName] = useState(null)
     const [password, setPassword] = useState('')
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
-    const [loggedIn, setLoggedIn] = useState('')
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -22,8 +24,8 @@ const Login = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target
-        if (name === 'username') {
-            setUserName(value)
+        if (name === 'userName') {
+            setTempUserName(value)
         } else { setPassword(value) }
     }
 
@@ -34,7 +36,7 @@ const Login = () => {
         const requestLogin = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ "username": tempUserName, password })
         }
         console.log(requestLogin)
         await fetch(`/users/login`, requestLogin)
@@ -42,10 +44,11 @@ const Login = () => {
                 response => {
                     if (response.ok) {
                         setFetchData(false)
+                        setIsLoggedIn(true)
+                        setUserName(tempUserName)
                         return history.push('/events')
                     } else {
                         setFetchData(false)
-                        console.log(response)
                         return setFetchError(response.statusText)
                         // setFetchError(response.statusText)
                         // return console.log(fetchError)
@@ -73,8 +76,8 @@ const Login = () => {
                                     required
                                     id="standard-required"
                                     label="Username"
-                                    name="username"
-                                    value={username}
+                                    name="userName"
+                                    value={userName}
                                     onChange={handleChange}
                                 />
                             </div>
