@@ -22,7 +22,7 @@ const NavBar = () => {
             const textResponse = await (response.json())
             if (textResponse.loggedIn) {
                 setIsLoggedIn(true)
-                setUserName(textResponse.user.userName)
+                setUserName(textResponse.user.username)
             }
         }
         checkLogin();

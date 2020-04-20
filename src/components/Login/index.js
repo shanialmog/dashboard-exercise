@@ -77,7 +77,7 @@ const Login = () => {
                                     id="standard-required"
                                     label="Username"
                                     name="userName"
-                                    value={userName}
+                                    value={tempUserName}
                                     onChange={handleChange}
                                 />
                             </div>
