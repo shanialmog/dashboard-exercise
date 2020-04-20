@@ -21,7 +21,7 @@ const Event = ({ match, location }) => {
     let history = useHistory()
 
     const user = useContext(UserContext)
-    const [isLoggedIn] = user.isLoggedIn
+    const [isLoggedIn, _setIsLoggedIn] = user.isLoggedIn
     const [event, setEvent] = useState({})
     const [tempEvent, setTempEvent] = useState({})
     const [edit, setEdit] = useState(false)
@@ -33,7 +33,7 @@ const Event = ({ match, location }) => {
         setFetchError('')
         const eventFetch = async () => {
             setFetchData(true)
-            let response = await fetch(`/events/${eventId}`)
+            const response = await fetch(`/events/${eventId}`)
                 .catch(error => {
                     console.log("error", error)
                     setFetchData(false)
@@ -43,7 +43,7 @@ const Event = ({ match, location }) => {
                 setFetchData(false)
                 return setFetchError(response.statusText)
             }
-            let textResponse = await (response.json())
+            const textResponse = await (response.json())
             setFetchData(false)
             setEvent(textResponse)
             setTempEvent(textResponse)
@@ -61,32 +61,32 @@ const Event = ({ match, location }) => {
     }
 
     const updateEvent = async () => {
-        setEvent(tempEvent)
         setFetchError('')
         setFetchData(true)
         const requestEdit = {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(event)
+            body: JSON.stringify(tempEvent)
         }
         console.log("requestedit", requestEdit)
         await fetch(`/events/${eventId}`, requestEdit)
-            .then(
-                response => {
-                    if (response.ok) {
-                        setFetchData(false)
-                        setEdit(false)
-                    } else {
-                        setFetchData(false)
-                        return setFetchError(response.statusText)
-                    }
+        .then(
+            response => {
+                if (response.ok) {
+                    setFetchData(false)
+                    setEdit(false)
+                    setEvent(tempEvent)
+                } else {
+                    setFetchData(false)
+                    return setFetchError(response.statusText)
                 }
+            }
             ).catch(error => {
                 setFetchData(false)
                 setEdit(false)
                 setFetchError(error)
             })
-    }
+        }
 
     const deleteEvent = async () => {
         setFetchError('')
@@ -142,8 +142,18 @@ const Event = ({ match, location }) => {
                                         name="title"
                                         value={tempEvent.title}
                                         onChange={handleChange}
+                                        />
+                                    <TextField
+                                        style={{ marginBottom: '20px' }}
+                                        id="standard"
+                                        label="Topics"
+                                        name="topics"
+                                        value={tempEvent.topics}
+                                        multiline
+                                        onChange={handleChange}
                                     />
-                                    <TextField required
+                                    <TextField
+                                        required
                                         id="standard-password-input"
                                         label="Summary"
                                         name="summary"

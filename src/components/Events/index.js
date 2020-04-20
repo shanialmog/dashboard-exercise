@@ -13,7 +13,7 @@ import Alert from '@material-ui/lab/Alert'
 
 const EventsList = () => {
     const user = useContext(UserContext)
-    const [isLoggedIn] = user.isLoggedIn
+    const [isLoggedIn, _setIsLoggedIn] = user.isLoggedIn
     const [events, setEventsList] = useState([])
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)

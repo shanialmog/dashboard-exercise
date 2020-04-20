@@ -12,7 +12,7 @@ const Login = () => {
     let history = useHistory()
     const user = useContext(UserContext)
     const [_isLoggedIn, setIsLoggedIn] = user.isLoggedIn
-    const [userName, setUserName] = user.userName
+    const [_userName, setUserName] = user.userName
     const [tempUserName, setTempUserName] = useState(null)
     const [password, setPassword] = useState('')
     const [fetchData, setFetchData] = useState(false)

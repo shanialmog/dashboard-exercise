@@ -13,7 +13,7 @@ import Alert from '@material-ui/lab/Alert'
 const NewEvent = () => {
 
     let history = useHistory()
-    const [event, setEvent] = useState({ title: "Enter title", summary: "Enter summary" })
+    const [event, setEvent] = useState({ title: "Enter title", summary: "Enter summary", topics: ["Enter topics"] })
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
 
@@ -74,8 +74,18 @@ const NewEvent = () => {
                                 name="title"
                                 value={event.title}
                                 onChange={handleChange}
+                                />
+                            <TextField
+                                style={{ marginBottom: '20px' }}
+                                id="standard"
+                                label="Topics"
+                                name="topics"
+                                value={event.topics}
+                                multiline
+                                onChange={handleChange}
                             />
-                            <TextField required
+                            <TextField
+                                required
                                 id="standard-password-input"
                                 label="Summary"
                                 name="summary"
