@@ -57,7 +57,12 @@ const Event = ({ match, location }) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target
-        setTempEvent(prevState => ({ ...prevState, [name]: value }))
+        if (name === "topics") {
+            const topics = value.split(',')
+            setTempEvent(prevState => ({ ...prevState, [name]: topics }))
+        } else {
+            setTempEvent(prevState => ({ ...prevState, [name]: value }))
+        }
     }
 
     const updateEvent = async () => {
@@ -70,23 +75,23 @@ const Event = ({ match, location }) => {
         }
         console.log("requestedit", requestEdit)
         await fetch(`/events/${eventId}`, requestEdit)
-        .then(
-            response => {
-                if (response.ok) {
-                    setFetchData(false)
-                    setEdit(false)
-                    setEvent(tempEvent)
-                } else {
-                    setFetchData(false)
-                    return setFetchError(response.statusText)
+            .then(
+                response => {
+                    if (response.ok) {
+                        setFetchData(false)
+                        setEdit(false)
+                        setEvent(tempEvent)
+                    } else {
+                        setFetchData(false)
+                        return setFetchError(response.statusText)
+                    }
                 }
-            }
             ).catch(error => {
                 setFetchData(false)
                 setEdit(false)
                 setFetchError(error)
             })
-        }
+    }
 
     const deleteEvent = async () => {
         setFetchError('')
@@ -142,7 +147,7 @@ const Event = ({ match, location }) => {
                                         name="title"
                                         value={tempEvent.title}
                                         onChange={handleChange}
-                                        />
+                                    />
                                     <TextField
                                         style={{ marginBottom: '20px' }}
                                         id="standard"
@@ -191,11 +196,17 @@ const Event = ({ match, location }) => {
                                     </Link>
                                 </div>
                                 <div className="event-title">
-                                    {event.topics ?
-                                        <span className="event-label">{event.topics}</span>
-                                        :
-                                        <span className="event-label">General</span>
-                                    }
+                                    <div>
+                                        {
+                                            event.topics ?
+                                                event.topics.map(topic => {
+                                                    return <span className="event-label">{topic}</span>
+                                                })
+                                                // <span className="event-label">{event.topics}</span>
+                                                :
+                                                <span className="event-label">General</span>
+                                        }
+                                    </div>
                                     <h1>{event.title}</h1>
                                     {
                                         isLoggedIn &&
