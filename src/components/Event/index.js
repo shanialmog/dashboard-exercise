@@ -216,11 +216,14 @@ const Event = ({ match, location }) => {
                                     }
                                 </div>
                             </div>
-                            <div className="typo-summary">
-                                <Typography variant="h6" style={{ width: "80%" }}>
-                                    {event.summary}
+                            <p className="event-content">
+                                {/* <div className="typo-summary"> */}
+                                <img className="event-img" src={tempEvent.thumbnail}></img>
+                                <Typography variant="body1" >
+                                {event.summary}
                                 </Typography>
-                            </div>
+                                {/* </div> */}
+                            </p>
                         </div>
                     }
                 </div>

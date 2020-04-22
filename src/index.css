@@ -41,12 +41,24 @@
 }
 
 .typo-summary {
-    width: 100%;
+    /* width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: center; */
+    float: none;
 }
 
 .navbar-login {
     display: flex;
     align-items : center;
+}
+
+.event-content {
+    width: 100%;
+    text-align: left;
+}
+
+.event-img {
+    display: block;
+    float: right;
+    margin: 0 0 17px 15px;
 }
