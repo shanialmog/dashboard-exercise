@@ -156,13 +156,22 @@ const Event = ({ match, location }) => {
                                         value={tempEvent.topics}
                                         multiline
                                         onChange={handleChange}
-                                    />
+                                        />
                                     <TextField
+                                        style={{ marginBottom: '20px' }}
                                         required
                                         id="standard-password-input"
                                         label="Summary"
                                         name="summary"
                                         value={tempEvent.summary}
+                                        multiline
+                                        onChange={handleChange}
+                                    />
+                                    <TextField
+                                        id="standard"
+                                        label="Image"
+                                        name="thumbnail"
+                                        value={tempEvent.thumbnail}
                                         multiline
                                         onChange={handleChange}
                                     />

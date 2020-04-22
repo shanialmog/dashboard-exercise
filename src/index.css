@@ -61,4 +61,6 @@
     display: block;
     float: right;
     margin: 0 0 17px 15px;
+    max-height: 50%;
+    max-width: 50%;
 }
