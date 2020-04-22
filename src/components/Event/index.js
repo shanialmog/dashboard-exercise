@@ -156,7 +156,7 @@ const Event = ({ match, location }) => {
                                         value={tempEvent.topics}
                                         multiline
                                         onChange={handleChange}
-                                        />
+                                    />
                                     <TextField
                                         style={{ marginBottom: '20px' }}
                                         required
@@ -229,7 +229,7 @@ const Event = ({ match, location }) => {
                                 {/* <div className="typo-summary"> */}
                                 <img className="event-img" src={tempEvent.thumbnail}></img>
                                 <Typography variant="body1" >
-                                {event.summary}
+                                    {event.summary}
                                 </Typography>
                                 {/* </div> */}
                             </p>
