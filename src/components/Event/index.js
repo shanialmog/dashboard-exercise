@@ -138,9 +138,9 @@ const Event = ({ match, location }) => {
                                 </Alert>
                             }
                             <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                                <div style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column' }}>
+                                <div style={{ marginBottom: '40', display: 'flex', flexDirection: 'column' }}>
                                     <TextField
-                                        style={{ marginBottom: '20px' }}
+                                        style={{ marginBottom: '20' }}
                                         required
                                         id="standard-required"
                                         label="Title"
@@ -149,7 +149,7 @@ const Event = ({ match, location }) => {
                                         onChange={handleChange}
                                     />
                                     <TextField
-                                        style={{ marginBottom: '20px' }}
+                                        style={{ marginBottom: '20' }}
                                         id="standard"
                                         label="Topics"
                                         name="topics"
@@ -158,7 +158,7 @@ const Event = ({ match, location }) => {
                                         onChange={handleChange}
                                     />
                                     <TextField
-                                        style={{ marginBottom: '20px' }}
+                                        style={{ marginBottom: '20' }}
                                         required
                                         id="standard-password-input"
                                         label="Summary"

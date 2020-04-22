@@ -13,7 +13,7 @@ import Alert from '@material-ui/lab/Alert'
 const NewEvent = () => {
 
     let history = useHistory()
-    const [event, setEvent] = useState()
+    const [event, setEvent] = useState("")
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
 
@@ -65,9 +65,9 @@ const NewEvent = () => {
                     }
                     <h1>New event</h1>
                     <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                        <div style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ marginBottom: 40, display: 'flex', flexDirection: 'column' }}>
                             <TextField
-                                style={{ marginBottom: '20px' }}
+                                style={{ marginBottom: 20 }}
                                 required
                                 id="standard-required"
                                 label="Title"
@@ -77,7 +77,7 @@ const NewEvent = () => {
                                 placeholder="Add title"
                                 />
                             <TextField
-                                style={{ marginBottom: '20px' }}
+                                style={{ marginBottom: 20 }}
                                 id="standard"
                                 label="Topics"
                                 name="topics"
@@ -87,7 +87,7 @@ const NewEvent = () => {
                                 placeholder="Add topics"
                                 />
                             <TextField
-                                style={{ marginBottom: '20px' }}
+                                style={{ marginBottom: 20 }}
                                 required
                                 id="standard-password-input"
                                 label="Summary"
@@ -104,7 +104,7 @@ const NewEvent = () => {
                                 value={event.thumbnail}
                                 multiline
                                 onChange={handleChange}
-                                placeholder="Add image"
+                                placeholder="Add summary"
                                 />
                         </div>
                         <div className="button-cont">
