@@ -13,9 +13,7 @@ import Alert from '@material-ui/lab/Alert'
 const NewEvent = () => {
 
     let history = useHistory()
-    const [event, setEvent] = useState({
-        title: "Enter title", summary: "Enter summary", topics: ["Enter topics"], thumbnail: "Enter image"
-    })
+    const [event, setEvent] = useState()
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
 
@@ -76,7 +74,8 @@ const NewEvent = () => {
                                 name="title"
                                 value={event.title}
                                 onChange={handleChange}
-                            />
+                                placeholder="Add title"
+                                />
                             <TextField
                                 style={{ marginBottom: '20px' }}
                                 id="standard"
@@ -85,7 +84,8 @@ const NewEvent = () => {
                                 value={event.topics}
                                 multiline
                                 onChange={handleChange}
-                            />
+                                placeholder="Add topics"
+                                />
                             <TextField
                                 style={{ marginBottom: '20px' }}
                                 required
@@ -93,9 +93,10 @@ const NewEvent = () => {
                                 label="Summary"
                                 name="summary"
                                 value={event.summary}
+                                placeholder="Add summary"
                                 multiline
                                 onChange={handleChange}
-                            />
+                                />
                             <TextField
                                 id="standard"
                                 label="Image"
@@ -103,7 +104,8 @@ const NewEvent = () => {
                                 value={event.thumbnail}
                                 multiline
                                 onChange={handleChange}
-                            />
+                                placeholder="Add image"
+                                />
                         </div>
                         <div className="button-cont">
                             <div>
