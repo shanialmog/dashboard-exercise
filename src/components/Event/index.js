@@ -142,7 +142,6 @@ const Event = ({ match, location }) => {
                                     <TextField
                                         style={{ marginBottom: '20' }}
                                         required
-                                        id="standard-required"
                                         label="Title"
                                         name="title"
                                         value={tempEvent.title}
@@ -150,7 +149,6 @@ const Event = ({ match, location }) => {
                                     />
                                     <TextField
                                         style={{ marginBottom: '20' }}
-                                        id="standard"
                                         label="Topics"
                                         name="topics"
                                         value={tempEvent.topics}
@@ -160,7 +158,6 @@ const Event = ({ match, location }) => {
                                     <TextField
                                         style={{ marginBottom: '20' }}
                                         required
-                                        id="standard-password-input"
                                         label="Summary"
                                         name="summary"
                                         value={tempEvent.summary}
@@ -168,7 +165,6 @@ const Event = ({ match, location }) => {
                                         onChange={handleChange}
                                     />
                                     <TextField
-                                        id="standard"
                                         label="Image"
                                         name="thumbnail"
                                         value={tempEvent.thumbnail}

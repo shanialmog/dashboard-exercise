@@ -69,7 +69,6 @@ const NewEvent = () => {
                             <TextField
                                 style={{ marginBottom: 20 }}
                                 required
-                                id="standard-required"
                                 label="Title"
                                 name="title"
                                 value={event.title}
@@ -78,7 +77,6 @@ const NewEvent = () => {
                                 />
                             <TextField
                                 style={{ marginBottom: 20 }}
-                                id="standard"
                                 label="Topics"
                                 name="topics"
                                 value={event.topics}
@@ -89,7 +87,6 @@ const NewEvent = () => {
                             <TextField
                                 style={{ marginBottom: 20 }}
                                 required
-                                id="standard-password-input"
                                 label="Summary"
                                 name="summary"
                                 value={event.summary}
@@ -98,7 +95,6 @@ const NewEvent = () => {
                                 onChange={handleChange}
                                 />
                             <TextField
-                                id="standard"
                                 label="Image"
                                 name="thumbnail"
                                 value={event.thumbnail}
