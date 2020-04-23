@@ -16,6 +16,7 @@ const NewEvent = () => {
     const [event, setEvent] = useState("")
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
+    const isValid = event.title && event.summary && event.topics && event.thumbnail
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -23,7 +24,12 @@ const NewEvent = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target
-        setEvent(prevState => ({ ...prevState, [name]: value }))
+        if (name === "topics") {
+            const topics = value.split(',')
+            setEvent(prevState => ({ ...prevState, [name]: topics }))
+        } else {
+            setEvent(prevState => ({ ...prevState, [name]: value }))
+        }
     }
 
     const saveEvent = async () => {
@@ -67,6 +73,7 @@ const NewEvent = () => {
                     <form onSubmit={handleSubmit} noValidate autoComplete="off">
                         <div style={{ marginBottom: 40, display: 'flex', flexDirection: 'column' }}>
                             <TextField
+                                error = {!event.title}
                                 style={{ marginBottom: 20 }}
                                 required
                                 label="Title"
@@ -76,6 +83,7 @@ const NewEvent = () => {
                                 placeholder="Add title"
                                 />
                             <TextField
+                                error = {!event.topics}
                                 style={{ marginBottom: 20 }}
                                 label="Topics"
                                 name="topics"
@@ -85,6 +93,7 @@ const NewEvent = () => {
                                 placeholder="Add topics"
                                 />
                             <TextField
+                                error = {!event.summary}
                                 style={{ marginBottom: 20 }}
                                 required
                                 label="Summary"
@@ -95,13 +104,14 @@ const NewEvent = () => {
                                 onChange={handleChange}
                                 />
                             <TextField
+                                error = {!event.thumbnail}
                                 label="Image"
                                 name="thumbnail"
                                 value={event.thumbnail}
                                 multiline
                                 onChange={handleChange}
                                 placeholder="Add summary"
-                                />
+                            />
                         </div>
                         <div className="button-cont">
                             <div>
@@ -110,7 +120,14 @@ const NewEvent = () => {
                                 </Link>
                             </div>
                             <div>
-                                <Button onClick={saveEvent} color="primary" variant="contained">Save</Button>
+                                <Button
+                                    disabled={!isValid}
+                                    onClick={saveEvent}
+                                    color="primary"
+                                    variant="contained"
+                                >
+                                    Save
+                                     </Button>
                             </div>
                         </div>
                     </form>
