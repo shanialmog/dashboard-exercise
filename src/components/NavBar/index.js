@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { UserContext } from '../../store/UserContext'
@@ -15,7 +15,7 @@ const NavBar = () => {
     const [isLoggedIn, setIsLoggedIn] = user.isLoggedIn
     const [userName, setUserName] = user.userName
 
-    
+
     useEffect(() => {
         const checkLogin = async () => {
             const response = await fetch('/users/status')
@@ -26,10 +26,10 @@ const NavBar = () => {
             }
         }
         checkLogin();
-    }, [ isLoggedIn])
+    }, [isLoggedIn, setIsLoggedIn, setUserName])
 
     const logOut = async () => {
-        let response = await fetch('/users/logout', { method: "POST" })
+        await fetch('/users/logout', { method: "POST" })
             .then(
                 response => {
                     if (response.ok) {

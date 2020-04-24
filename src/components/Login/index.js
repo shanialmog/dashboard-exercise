@@ -11,12 +11,12 @@ const Login = () => {
 
     let history = useHistory()
     const user = useContext(UserContext)
-    const [_isLoggedIn, setIsLoggedIn] = user.isLoggedIn
-    const [_userName, setUserName] = user.userName
+    const [, setIsLoggedIn] = user.isLoggedIn
+    const [, setUserName] = user.userName
     const [tempUserName, setTempUserName] = useState(null)
     const [password, setPassword] = useState('')
     const [fetchData, setFetchData] = useState(false)
-    const [fetchError, setFetchError] = useState(null)
+    const [, setFetchError] = useState(null)
 
     const handleSubmit = (event) => {
         event.preventDefault()

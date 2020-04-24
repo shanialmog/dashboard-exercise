@@ -21,7 +21,7 @@ const Event = ({ match, location }) => {
     let history = useHistory()
 
     const user = useContext(UserContext)
-    const [isLoggedIn, _setIsLoggedIn] = user.isLoggedIn
+    const [isLoggedIn] = user.isLoggedIn
     const [event, setEvent] = useState({})
     const [tempEvent, setTempEvent] = useState({})
     const [edit, setEdit] = useState(false)
@@ -223,7 +223,7 @@ const Event = ({ match, location }) => {
                             </div>
                             <p className="event-content">
                                 {/* <div className="typo-summary"> */}
-                                <img className="event-img" src={tempEvent.thumbnail}></img>
+                                <img className="event-img" src={tempEvent.thumbnail} alt="event"></img>
                                 <Typography variant="body1" >
                                     {event.summary}
                                 </Typography>
