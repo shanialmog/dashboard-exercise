@@ -16,7 +16,7 @@ import Input from '@material-ui/core/Input'
 const NewEvent = () => {
 
     let history = useHistory()
-    const [event, setEvent] = useState({ title: "", summary: undefined, thumbnail: "", topics: [] })
+    const [event, setEvent] = useState({ title: "", summary: "", thumbnail: "", topics: [] })
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
     const isValid = event.title.length > 0 && event.summary.length > 0
@@ -30,13 +30,10 @@ const NewEvent = () => {
         if (name === "topics") {
             const topics = value.split(',')
             setEvent(prevState => ({ ...prevState, [name]: topics }))
-        } else if (name === "thumbnail") {
-            setEvent(prevstate => ({ ...prevstate, [name]: e.target.files[0] }))
         } else {
             setEvent(prevState => ({ ...prevState, [name]: value }))
         }
     }
-    console.log(event)
 
     const saveEvent = async () => {
         setFetchError('')
@@ -63,6 +60,32 @@ const NewEvent = () => {
                 setFetchError(error)
             })
     }
+    const handleImageSelect = async (e) => {
+        const selectedImage = e.target.files[0]
+        const data = new FormData()
+        data.append("image", selectedImage)
+        const response = await fetch('/images/upload', {
+            method: 'POST',
+            body: data
+        })
+        console.log(response)
+        const body = await (response.json())
+        console.log(body.url)
+        setEvent(prevstate => ({ ...prevstate, thumbnail: body.url }))
+    }
+    
+    // const uploadImage = async () => {
+    //     const data = new FormData()
+    //     data.append("image", imageUpload)
+    //     const response = await fetch('/images/upload', {
+    //         method: 'POST',
+    //         body: data
+    //     })
+    //     console.log(response)
+    //     const body = await (response.json())
+    //     console.log(body.url)
+    //     setEvent(prevstate => ({ ...prevstate, thumbnail: body.url }))
+    // }
 
     return (
         <div>
@@ -109,22 +132,19 @@ const NewEvent = () => {
                                 multiline
                                 onChange={handleChange}
                             />
-                            {/* <TextField
-                                error={!event.thumbnail}
-                                label="Image"
-                                name="thumbnail"
-                                value={event.thumbnail}
-                                multiline
-                                onChange={handleChange}
-                                placeholder="Add summary"
-                            /> */}
                             <Input
                                 name="thumbnail"
                                 label="Image"
                                 type="file"
-                                onChange={handleChange}
+                                onChange={handleImageSelect}
                             >
                             </Input>
+                            {/* <Button
+                                color="primary"
+                                onClick={uploadImage}
+                            >
+                                Upload
+                            </Button> */}
                         </div>
                         <div className="button-cont">
                             <div>
@@ -140,7 +160,7 @@ const NewEvent = () => {
                                     variant="contained"
                                 >
                                     Save
-                                     </Button>
+                                </Button>
                             </div>
                         </div>
                     </form>

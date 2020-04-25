@@ -13,8 +13,8 @@ const Login = () => {
     const user = useContext(UserContext)
     const [, setIsLoggedIn] = user.isLoggedIn
     const [, setUserName] = user.userName
-    const [tempUserName, setTempUserName] = useState(null)
-    const [password, setPassword] = useState('')
+    const [tempUserName, setTempUserName] = useState("")
+    const [password, setPassword] = useState("")
     const [fetchData, setFetchData] = useState(false)
     const [, setFetchError] = useState(null)
 
