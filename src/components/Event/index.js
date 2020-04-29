@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Alert from '@material-ui/lab/Alert'
-
+import Input from '@material-ui/core/Input'
 
 
 
@@ -22,11 +22,12 @@ const Event = ({ match, location }) => {
 
     const user = useContext(UserContext)
     const [isLoggedIn] = user.isLoggedIn
-    const [event, setEvent] = useState({})
-    const [tempEvent, setTempEvent] = useState({})
+    const [event, setEvent] = useState({ title: "", summary: "", thumbnail: "", topics: [] })
+    const [tempEvent, setTempEvent] = useState({ title: "", summary: "", thumbnail: "", topics: [] })
     const [edit, setEdit] = useState(false)
     const [fetchData, setFetchData] = useState(false)
     const [fetchError, setFetchError] = useState(null)
+    const isValid = tempEvent.title.length > 0 && tempEvent.summary.length > 0
 
 
     useEffect(() => {
@@ -122,6 +123,18 @@ const Event = ({ match, location }) => {
         setEdit(false)
     }
 
+    const handleImageSelect = async (e) => {
+        const selectedImage = e.target.files[0]
+        const data = new FormData()
+        data.append("image", selectedImage)
+        const response = await fetch('/images/upload', {
+            method: 'POST',
+            body: data
+        })
+        const body = await (response.json())
+        setTempEvent(prevstate => ({ ...prevstate, thumbnail: body.url }))
+    }
+
 
     return (
         <div>
@@ -140,6 +153,7 @@ const Event = ({ match, location }) => {
                             <form onSubmit={handleSubmit} noValidate autoComplete="off">
                                 <div style={{ marginBottom: '40', display: 'flex', flexDirection: 'column' }}>
                                     <TextField
+                                        error={tempEvent.title.length === 0}
                                         style={{ marginBottom: '20' }}
                                         required
                                         label="Title"
@@ -156,6 +170,7 @@ const Event = ({ match, location }) => {
                                         onChange={handleChange}
                                     />
                                     <TextField
+                                        error={tempEvent.summary.length === 0}
                                         style={{ marginBottom: '20' }}
                                         required
                                         label="Summary"
@@ -164,23 +179,36 @@ const Event = ({ match, location }) => {
                                         multiline
                                         onChange={handleChange}
                                     />
-                                    <TextField
-                                        label="Image"
+                                    <Input
                                         name="thumbnail"
-                                        value={tempEvent.thumbnail}
-                                        multiline
-                                        onChange={handleChange}
-                                    />
+                                        label="Image"
+                                        type="file"
+                                        onChange={handleImageSelect}
+                                    >
+                                    </Input>
                                 </div>
                                 <div className="button-cont">
                                     <div>
                                         <Button onClick={deleteEvent} color="secondary" variant="contained">Delete</Button>
                                     </div>
                                     <div>
-                                        <Button onClick={cancelEditEvent} color="primary" variant="contained">Cancel</Button>
+                                        <Button
+                                            onClick={cancelEditEvent}
+                                            color="primary"
+                                            variant="contained"
+                                        >
+                                            Cancel
+                                        </Button>
                                     </div>
                                     <div>
-                                        <Button onClick={updateEvent} color="primary" variant="contained">Update</Button>
+                                        <Button
+                                            disabled={!isValid}
+                                            onClick={updateEvent}
+                                            color="primary"
+                                            variant="contained"
+                                        >
+                                            Update
+                                        </Button>
                                     </div>
                                 </div>
                             </form>
@@ -205,9 +233,8 @@ const Event = ({ match, location }) => {
                                         {
                                             event.topics ?
                                                 event.topics.map(topic => {
-                                                    return <span className="event-label">{topic}</span>
+                                                    return <span key={topic} className="event-label">{topic}</span>
                                                 })
-                                                // <span className="event-label">{event.topics}</span>
                                                 :
                                                 <span className="event-label">General</span>
                                         }

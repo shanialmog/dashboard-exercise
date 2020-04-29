@@ -8,8 +8,6 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Alert from '@material-ui/lab/Alert'
-// import FormControl from '@material-ui/core/FormControl'
-// import InputLabel from '@material-ui/core/InputLabel'
 import Input from '@material-ui/core/Input'
 
 
@@ -68,24 +66,9 @@ const NewEvent = () => {
             method: 'POST',
             body: data
         })
-        console.log(response)
         const body = await (response.json())
-        console.log(body.url)
         setEvent(prevstate => ({ ...prevstate, thumbnail: body.url }))
     }
-    
-    // const uploadImage = async () => {
-    //     const data = new FormData()
-    //     data.append("image", imageUpload)
-    //     const response = await fetch('/images/upload', {
-    //         method: 'POST',
-    //         body: data
-    //     })
-    //     console.log(response)
-    //     const body = await (response.json())
-    //     console.log(body.url)
-    //     setEvent(prevstate => ({ ...prevstate, thumbnail: body.url }))
-    // }
 
     return (
         <div>
